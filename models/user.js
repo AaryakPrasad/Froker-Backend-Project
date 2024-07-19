@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+// Define the user schema
 const userSchema = new mongoose.Schema({
     phoneNumber: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
@@ -13,6 +14,7 @@ const userSchema = new mongoose.Schema({
     purchasePowerAmount: { type: Number, default: 0 },
 });
 
+// Hash the password using Bcrypt before saving the user to the database using a pre-save hook (middleware) in Mongoose
 userSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
         this.password = await bcrypt.hash(this.password, 10);

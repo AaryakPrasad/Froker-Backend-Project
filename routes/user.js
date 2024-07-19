@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const auth = require('../middleware/auth');
 
+// GET /api/user - Get user details
 router.get('/user', auth, async (req, res) => {
     try {
         const user = await User.findById(req.userId).select('-password');
@@ -15,15 +16,18 @@ router.get('/user', auth, async (req, res) => {
     }
 });
 
+// POST /api/user/borrow - Borrow money
 router.post('/borrow', auth, async (req, res) => {
     try {
         const { amount, tenureMonths } = req.body;
         const user = await User.findById(req.userId);
 
+        // Check if user exists
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        // Check if user has enough purchase power
         if (amount > user.purchasePowerAmount) {
             return res.status(400).json({ message: 'Requested amount exceeds available purchase power' });
         }
@@ -37,6 +41,7 @@ router.post('/borrow', auth, async (req, res) => {
         user.purchasePowerAmount -= amount;
         await user.save();
 
+        // Send response with updated purchase power and repayment details
         res.json({
             updatedPurchasePower: user.purchasePowerAmount,
             monthlyRepayment: monthlyRepayment.toFixed(2),

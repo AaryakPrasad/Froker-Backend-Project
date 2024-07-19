@@ -26,7 +26,7 @@ const userRoutes = require('./routes/user');
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Send requests to localhost:3000/api/');
 });
 
 // Start the server
