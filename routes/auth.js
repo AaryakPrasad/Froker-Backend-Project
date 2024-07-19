@@ -18,8 +18,12 @@ router.post('/signup', async (req, res) => {
         }
 
         // Validate age and salary
-        if (age <= 20 || monthlySalary < 25000) {
-            return res.status(400).json({ message: 'Application rejected. User must be above 20 years old and have a monthly salary of 25k or more.' });
+        if (age <= 20) {
+            return res.status(400).json({ message: 'Application rejected. User must be above 20 years old.' });
+        }
+
+        if (monthlySalary < 25000) {
+            return res.status(400).json({ message: 'Application rejected. Monthly salary must be at least 25,000.' });
         }
 
         const user = new User({

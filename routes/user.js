@@ -17,7 +17,7 @@ router.get('/user', auth, async (req, res) => {
 
 router.post('/borrow', auth, async (req, res) => {
     try {
-        const { amount } = req.body;
+        const { amount, tenureMonths } = req.body;
         const user = await User.findById(req.userId);
 
         if (!user) {
@@ -30,7 +30,6 @@ router.post('/borrow', auth, async (req, res) => {
 
         // Calculate repayment details
         const interestRate = 0.08; // 8% annual interest rate
-        const tenureMonths = 12; // Assuming a fixed tenure of 12 months
         const monthlyInterestRate = interestRate / 12;
         const monthlyRepayment = (amount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, tenureMonths)) / (Math.pow(1 + monthlyInterestRate, tenureMonths) - 1);
 
