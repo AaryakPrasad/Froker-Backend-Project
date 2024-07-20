@@ -30,6 +30,11 @@ JWT_SECRET=your_jwt_secret
 ```
 
 ## Running the Project
+To start the mongoDB server and the project, run the following commands in separate terminal windows:
+```sh
+mongod
+```
+
 ```sh
 node app.js
 ```
@@ -46,7 +51,7 @@ node app.js
 ### Logging in a User: ```POST localhost:3000/api/login```
 ![Screenshot of /login](/test_screenshots/Login.png)
 
-### Fetching user details using JWT: ```GET localhost:3000/api/user```
+### Fetching user details with JWT bearer token: ```GET localhost:3000/api/user```
 ![Screenshot of /user](/test_screenshots/user_details.png)
 
 ### Borrowing money: ```POST localhost:3000/api/borrow```
